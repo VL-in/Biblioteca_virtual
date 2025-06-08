@@ -51,12 +51,15 @@ def ordernar_lista_biblioteca():
     if ordernar_por == '1':
         for titulo, valor in sorted(Biblioteca_virtual.items()):
             print(titulo, valor)
+        print("-" * 15)
     elif ordernar_por == '2':
         for titulo, valor in sorted(Biblioteca_virtual.items(), key=lambda item: item[1]['data_publicacao']):
             print(titulo,valor)
+        print("-" * 15)
     elif ordernar_por == '3':
         for titulo, valor in sorted(Biblioteca_virtual.items(), key=lambda item: item[1]['tipo']):
             print(titulo,valor)
+        print("-" * 15)
     else:
         print('Entrada invalida.')
 
@@ -67,6 +70,7 @@ def listar_dir():
         Ela retorna uma lista com os arquivos existentes no diretório.'''
     #Pedindo para o usuário passar o diretório via teclado
     diretorio = input(r'Forneça a pasta que contém os arquivos: ')
+    print('\n')
     acao_listar = True
     #Verifica se o caminho existe. Caso não exista, a ação de listar não ocorrerá.
     if os.path.exists(diretorio):
@@ -165,13 +169,17 @@ def listar_doc_dir_org():
         if not valor: #Listas vazias não são printadas.
             continue
         elif chave !=  'diverso':
+            print('\n')
             print(f'Os documentos no formato de {chave} são: ')   
+            print('\n')
             for titulo in valor:
-                print(f'{titulo}')         
+                print(f'    {titulo}')         
         elif chave == 'diverso':
+            print('\n')
             print(f"Os arquivos em outros tipos de formato neste diretório são: ")
+            print('\n')
             for titulo in valor:
-                print(f'{titulo}')  
+                print(f'    {titulo}')  
     return biblioteca
 
 #Definir chave-valor da Biblioteca_virtual via input:
@@ -212,11 +220,15 @@ def adicionar_doc_na_lista():
     resposta = 's'
     #Permite adicionar mais de um título (chave-valor) no mesmo loop.
     while resposta == 's':
-        print("Digite as informações solicitadas.")
+        print("Digite as informações solicitadas:")
+        print('\n')
         titulo_biblioteca_input()
+        print('\n')
         resposta = input('Deseja inserir mais um título? (s/n): ')  #define se o loop continua
+        print('\n')
         if resposta == 'n':
             visualizar = input('Deseja visualizar a lista atualizada? (s/n): ') #Pergunta se o usuário quer visualizar a lista atualizada
+            print('\n')
             if visualizar == 's':
                 for titulo, valor in sorted(Biblioteca_virtual.items()):
                     print(titulo, valor)
@@ -226,6 +238,8 @@ def adicionar_doc_na_lista():
                 print("Resposta invalida.")   
             print(f"A adição do(s) título(s) na lista da biblioteca foi concluída") 
             break #Finaliza o loop
+        elif resposta == 's':
+            continue
         else:
             print("Entrada invalida.")
             break #finaliza loop com a entrada incorreta.
@@ -245,29 +259,34 @@ def adicionar_doc_via_dir():
         else:
             print('Ocorreu um erro.')
             break
+    print('\n')
     visualizar = input(f'Gostaria de visualizar a biblioteca virtual atualizada? (s/n): ')
+    print('\n')
     if visualizar == 's':
         for titulo, valor in sorted(Biblioteca_virtual.items()):
             print(titulo, valor)
     elif visualizar == 'n':
         None
     else:
+        print('\n')
         print("Resposta invalida. Finalizando a adição dos documentos.")
+        print('\n')
 
     return Biblioteca_virtual
 
 #Renomear documento do diretório
 def renomear_doc_dir():
     '''Este código permite o usuário renomear um documento do diretório.'''
-    arq_renomear = (input(r'Digite o diretório a ser renomeado: '))
+    print('\n')
+    arq_renomear = (input(r'Digite o diretório a ser renomeado, não inclua aspas: '))
     novo_nome = (input(r'Digite o novo nome do arquivo: '))
-    os.rename(arq_renomear, novo_nome)
+    os.rename(arq_renomear, os.path.join(os.path.dirname(arq_renomear), novo_nome))
     print(f'O arquivo {arq_renomear} foi renomeado com sucesso para {novo_nome}.')
 
 #Remover documento do diretório
 def remover_doc_dir():
     '''Este código permite o usuário remover um documento do diretório.'''
-    arquivo_del = (input(r'Digite o diretório a ser removido: '))
+    arquivo_del = (input(r'Digite o arquivo a ser removido: '))
     if os.path.exists(arquivo_del): #Se o arquivo existir, será deletado.
         os.remove(arquivo_del)
         print(f'O arquivo {arquivo_del} foi removido da pasta.')
@@ -278,7 +297,9 @@ def remover_doc_dir():
 def renomear_doc_lista():
     '''Este código permite o usuário renomear um título da biblioteca_virtual e retorna a biblioteca atualizada.'''
     global Biblioteca_virtual
+    print('\n')
     titulo_existente = (input(r'Digite o título a ser renomeado: '))
+    print('\n')
     novo_nome = (input(r'Digite um novo nome: '))
     if titulo_existente in Biblioteca_virtual:
         Biblioteca_virtual[novo_nome] = Biblioteca_virtual.pop(titulo_existente)
@@ -302,25 +323,38 @@ def remover_doc_lista():
 #Definindo função para voltar ao menu principal
 def voltar_menu_principal(menu):
     '''Esta função permite que usuário voltar para o menu principal.'''
-    menu_continuar = input('Gostaria de voltar para o menu principal? (s/n): ')
-    if menu_continuar == 's':
-        menu = True
-    elif menu_continuar == 'n':
-        menu = False
+    while True:
+        print('\n')
+        menu_continuar = input('Digite [1] para voltar ao menu principal: ')
+        if menu_continuar == '1':
+            return True
+        else:
+            print('Opção inválida. Por favor, digite [1] para voltar ao menu principal.')
+        
+        
 
 #Definindo a interface do usuário
 def interface_biblioteca():
     menu = True
     while menu == True:
+        print("-" * 80)
+        print('\n')
         print('Bem vindo à biblioteca virtual!')
-        print('Escolha uma das seguintes opções para continuar')
-        print(' Se deseja visualizar arquivos presentes dentro de uma pasta, digite "1"')
-        print(' Se deseja visualizar a biblioteca atual, digite "2"')
-        print(' Se deseja adicionar um novo documento à biblioteca, digite "3"')
-        print(' Se deseja renomear um documento existente, digite "4"')
-        print(' Se deseja remover um documento existente, digite "5"')
-        print(' Se deseja sair, digite "6"')
+        print('\n')
+        print('Escolha uma das seguintes opções para continuar: ')
+        print('\n')
+        print('    [1] Visualizar arquivos presentes dentro de uma pasta')
+        print('    [2] Visualizar a biblioteca atual')
+        print('    [3] Adicionar um novo documento à biblioteca')
+        print('    [4] Renomear uma pasta ou documento existente')
+        print('    [5] Remover uma documento existente')
+        print('\n')
+        print('    [6] Sair')
+        print('\n')
+        print("-" * 80)
+        print('\n')
         opcao = input('Digite a opção desejada: ')
+        print('\n')
 
         if opcao == '1':
             listar_doc_dir_org()
@@ -328,15 +362,20 @@ def interface_biblioteca():
 
         elif opcao == '2':
             print(f'Os documentos na biblioteca são: ')
+            print('\n')
             for titulo, valor in sorted(Biblioteca_virtual.items()):
                 print(titulo, valor)
             voltar_menu_principal(menu)
             
         elif opcao == '3':
             print('Gostaria de adicionar um novo documento de qual forma?')
-            print('  Via diretório, digite "1"')
-            print('  Via teclado, digite "2"')
+            print('\n')
+            print('   [1] Via diretório importanto todos os arquivos para a lista biblioteca')
+            print('   [2] Via teclado inserindo título e informações')
+            print('\n')
+
             opcao_adicionar = input('Digite a opção desejada: ')
+            print('\n')
             if opcao_adicionar == '1':
                 adicionar_doc_via_dir()
             elif opcao_adicionar == '2':
@@ -346,8 +385,10 @@ def interface_biblioteca():
             voltar_menu_principal(menu)
         elif opcao == '4':
             print('Como gostaria de renomear um documento?')
-            print('  Documento existente no diretório, digite "1"')
-            print('  Documento existente na biblioteca, digite "2"')
+            print('\n')
+            print('    [1] Documento existente no diretório')
+            print('    [2] Documento existente na lista da biblioteca')
+            print('\n')
             opcao_renomear = input('Digite a opção desejada: ')
             if opcao_renomear == '1':
                 renomear_doc_dir()
@@ -359,9 +400,12 @@ def interface_biblioteca():
 
         elif opcao == '5':
             print('Onde deseja remover o documento?')
-            print('  Documento existente no diretório, digite "1"')
-            print('  Título existente na biblioteca, digite "2"')
+            print('\n')
+            print('   [1] Documento existente no diretório')
+            print('   [2] Título existente na biblioteca')
+            print('\n')
             opcao_remover = input('Digite a opção desejada: ')
+            print('\n')
             if opcao_remover == '1':
                 remover_doc_dir()
             elif opcao_remover == '2':
@@ -372,8 +416,9 @@ def interface_biblioteca():
 
         elif opcao == '6':
             print('Obrigado por usar a biblioteca virtual!')
-            menu == False
+            menu = False
             break
+
     else:
         print('Opção inválida. Tente novamente.')
         voltar_menu_principal(menu)

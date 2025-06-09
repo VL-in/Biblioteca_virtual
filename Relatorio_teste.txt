@@ -1,0 +1,34 @@
+#Relatório de teste do programa biblioteca_virtual
+
+O programa foi submetido aos testes ao passo que foi sendo desenvolvido, 
+com a primeira versão lançada no commit 5f86916962605c262fe8c1c62bec8c8f9f3422ec.
+
+Esta versão foi testada por um outro usuário (o bibliotecário) na sua máquina.
+O usuário não teve acesso ao código, desempenhando a função do bibliotecário, e testou todas as opções do programa,
+inserindo os diretórios do seu computador, quando necessário.
+
+Após o primeiro teste, foi coletado os seguintes feedbacks:
+ 1. Layout da interface desorganizado e difícil de visualizar.
+ 2. As funções das opções da interface não estavam claras.
+ 3. Os arquivos do diretório fornecido não foram renomeados adequadamente conforme descrito na opção da interface.
+
+As tratativas tomadas para cada um dos feedbacks foram:
+ 1. Inserção de espaçamento, delimitadores e uma melhor organização das opções do menu de interface.
+ 2. Aprimoramento dos textos impressos na tela para descrição das opções.
+ 3. Correção da função que renomeia arquivos do diretório.
+
+Após estas alterações, foi feito o commit e8ed37ad297f47d20f491dfe13d809b6fbe2efb0.
+
+O usuário fez novamente os testes e teve acesso ao código para maiores feedback.
+Ao testar novamente o código, o usuário descreveu:
+ 1. O programa não forneceu opção de ordenar a lista da biblioteca_virtual (com uma função já criada para isso).
+ 2. A opção de voltar para o menu apresentou erro ao digitar não como resposta. Sugeriu que o programa sempre voltasse para o menu
+    e sair do programa por meio da menu.
+
+As correções foram feitas da seguinte forma:
+ 1. Correção da opção 2 (listar a biblioteca_virtual) para (listar a biblioteca_virtual de forma ordenada)
+ 2. Alterou a função voltar_para_menu para sempre voltar para menu.
+ 3. Adicionou mais documentação e comentários ao código (observação da autora).
+
+ O commit 1d9d94ae2d5a6a15047c10e442f60dc3f7faad2e foi feito após as correções.
+
